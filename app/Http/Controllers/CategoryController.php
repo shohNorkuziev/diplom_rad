@@ -2,64 +2,78 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+    public $user_id;
+    public $user_role;
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function authUser(){
+        if(Auth::check()){
+            $user=Auth::user();
+            $this->user_id=$user->id;
+            $this->user_role=$user->role;
+        }else{
+            $this->user_role='quest';
+        }
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function index(){
+        $product=Category::all();
+        $this->authUser();
+        $data=(object)[
+            'product'=>$product,
+            'role'=>$this->user_role,
+        ];
+        return view('category.categories')->with(['data'=>$data]);
     }
+    public function create(){
+        $this->authUser();
+        $data=(object)[
+            'role'=>$this->user_role,
+        ];
+        if($data->role=='admin'){
+            return view('category.create')->with(['data'=>$data]);
+        }else{
+            return view('layout.noaccess')->with(['data'=>$data]);
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
-    {
-        //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
-    {
-        //
+    public function store(Request $request){
+        $validator=Validator::make($request->all(),[
+            'name'=>['required','max:125'],
+        ]);
+        if($validator->fails()){
+            $msg='Ошибка при заполнении формы';
+            return redirect()->route('categories.create')->with('success','Ошибка при заполнении формы');
+        }else{
+            Category::create($validator->validated());
+            return redirect()->route('categories.index')->with('success','Товар добавлен');
+        }
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Category $category)
-    {
-        //
+    public function edit(string $id){
+        $pro=Category::find($id);
+        $this->authUser();
+        $data=(object)[
+            'role'=>$this->user_role,
+        ];
+        return view('category.edit',compact('pro'))->with(['data'=>$data]);
+        if($data->role=='admin'){
+            return view('category.edit',compact('pro'))->with(['data'=>$data]);
+        }else{
+            return view('layout.noaccess')->with(['data'=>$data]);
+        }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Category $category)
-    {
-        //
+    public function update(Request $request,Category $category){
+        $category->update($request->all());
+        return  redirect()->route('categories.index')->with('success','Товар изменен');
+    }
+    public function destroy(string $id){
+       $product=Category::find($id);
+       $product->delete();
+        return  redirect()->route('categories.index')->with('success','Товар Удален');
     }
 }

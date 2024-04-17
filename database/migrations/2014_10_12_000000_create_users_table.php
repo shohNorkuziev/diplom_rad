@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('patronymic')->nullable();
             $table->string('email')->unique();
+            $table->enum('gender',['М','Ж']);
+            $table->enum('role',['server','manager','admin']);
             $table->string('password');
-            $table->enum('role', ['admin','manager', 'server']);
+            $table->rememberToken();
             $table->timestamps();
         });
     }

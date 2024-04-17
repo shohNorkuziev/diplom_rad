@@ -3,46 +3,80 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-
-    public function signin(Request $request)
-    {
-        $req = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        Auth::attempt($req);
-
-        return redirect()->route('home');
+    public $user_id;
+    public $user_role;
+    public function authUser(){
+        if(Auth::check()){
+            $user=Auth::user();
+            $this->user_id=$user->id;
+            $this->user_role=$user->role;
+        }else{
+            $this->user_role='quest';
+        }
     }
-    public function logout()
-    {
-        Auth::logout();
-        return redirect()->route('home');
+    public function home(){
+        $this->authUser();
+        $data=(object)[
+            'role'=>$this->user_role,
+        ];
+        return view('layout.layouts')->with(['data'=>$data]);
     }
-    public function index()
-    {
-        //
+    public function basket(Request $request){
+        $this->authUser();
+        $test=[];
+        $basket=[];
+        $request->session()->put('basket', [['id'=>5,'qty'=>2],['id'=>6,'qty'=>2]]);
+        if($request->session()->has('basket')){
+            $value = $request->session()->get('basket');
+            foreach ($value as $key => $value) {
+                $product=Product::find($value['id']);
+                $category=Category::find($product->category_id)->name;
+                $this->authUser();
+                $data=(object)[
+                    'id'=>$product->id,
+                    'name'=>$product->name,
+                    'price'=>$product->price,
+                    'image'=>$product->image,
+                    'description'=>$product->description,
+                    'category'=>$product->category->name,
+                    'role'=>$this->user_role,
+                    'qty'=>$value['qty'],
+                ];
+                array_push($basket, $data);
+                array_push($test, $value);
+            }
+        }
+        $data=(object)[
+            'test'=>$test,
+            'basket'=>$basket,
+            'role'=>$this->user_role,
+        ];
+        return view('purchase.basket')->with(['data'=>$data]);
     }
-
-    public function create()
-    {
-        //
+    public function info(){
+        $this->authUser();
+        $data=(object)[
+            'role'=>$this->user_role,
+        ];
+        return view('layout.info')->with(['data'=>$data]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        dd(!auth()->user()->role == 'admin');
+    public function create(){
+        $this->authUser();
+        $data=(object)[
+            'role'=>$this->user_role,
+        ];
+        return view('auth.reg')->with(['data'=>$data]);
+    }
+    public function store(Request $request){
         if (!auth()->user()->role == 'admin') {
             abort(403);
         }
@@ -50,58 +84,41 @@ class UserController extends Controller
         if (!Hash::check($password, Auth::user()->password)) {
             return redirect()->back()->withErrors(['password' => 'Неверный пароль']);
         }
-        $validator = Validator::make($request->all(), [
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'patronymic' => 'nullable',
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'role' => 'required'
+        $validator=Validator::make($request->all(),[
+            'firstname'=>['required','alpha'],
+            'lastname'=>['required','alpha'],
+            'patronymic'=>['nullable'],
+            'email'=>['email','unique:users'],
+            'password'=>['required','min:6'],
+            'role'=>'required'
         ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+        if($validator->fails()){
+            return redirect()->route('create')->with('success','Ошибка при создании сотрудника');
         }
-        $user = User::create([
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
-            'patronymic' => $request->patronymic,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role
-        ]);
-
-        return redirect()->route('home');
+        else{
+            User::create($validator->validated());
+            return redirect()->route('home')->with('success','Сотрудник добавлен');
+        }
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function login(){
+        $this->authUser();
+        $data=(object)[
+            'role'=>$this->user_role,
+        ];
+        return view('auth.auth')->with(['data'=>$data]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function signup(Request $request){
+        if(Auth::attempt($request->only(['email','password']))){
+            return redirect()->route('info')->with('success','Вы авторизованы');
+        }
+        else{
+            return redirect()->route('login')->with('success','Ошибка авторизации');
+        }
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function logout(){
+        if(Auth::check()){
+            Auth::logout();
+        }
+        return redirect()->route('info')->with('success','Вы вышли');
     }
 }

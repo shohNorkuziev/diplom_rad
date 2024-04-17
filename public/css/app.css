@@ -1,40 +1,129 @@
-html{
-    height: 100%;
-}
-a{
+*{
+    margin: 0;
+    padding: 0;
+    color: rgb(22, 8, 47);
     text-decoration: none;
-    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    box-sizing: border-box;
 }
-a:hover{
-    text-decoration: underline;
-    color: rgb(190, 189, 189);
-}
-body{
+.wrapper{
     display: grid;
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;
-    margin: 0;
-    padding: 0;
+}
+.border-content{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 25px 15px;
+}
+header,footer{
+    background: rgb(128, 128, 128,0.7);
+}
+hr{
+    background: black;
+    margin: 10px 0;
+}
+.header-log{
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+.header-log-menu{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.header-title{
+    margin-bottom: 15px;
+}
+.nav{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.nav li{
+    display: grid;
+    justify-content: center;
+}
+li{
+    list-style-type: none;
+}
+a{
+    position: relative;
+    font-size: 20px;
+}
+a:hover{
+    top: -2px;
+}
+.basket{
+    width: 35px;
+    height: 35px;
+    background: white;
+    border-radius: 50px;
+    position: relative;
+}
+.basket-img{
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 7px;
+    left: 6px;
+}
+.basket-qty{
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    position: relative;
+    top: 1px;
+    left: 25px;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50px;
+}
+.content_column{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 15px;
+}
+.product_item{
+    background: rgb(128, 128, 128,0.3);
+    padding: 10px;
+    border: 2px solid rgb(0, 0, 0,0.6);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.product_item-block{
+    height: 300px;
+}
+.product_img{
+    display: block;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.product-add{
+    display: block;
+    margin-bottom: 25px;
+    background: rgb(128, 128, 128,0.7);
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 15px;
+    width: 170px;
+    text-align: center;
+}
+.categoty-item{
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+.input-create{
+    width: 300px;
+    padding: 10px;
+    margin: 10px 0;
+}
+.content_row{
+    display: grid;
+    justify-items: center;
 }
 
-header{
-    font-size: 20px;
-    display: flex;
-    justify-content: space-between;
-    padding: 25px;
-    background-color: rgb(78, 78, 78);
-    color: white;
-    height: 70px;
-    width: 100%;
-}
-main{
-}
-footer{
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between;
-    padding: 25px;
-    background-color: rgb(78, 78, 78);
-    color: white;
-    width: 100%;
-}
+
+

@@ -1,2 +1,2 @@
-RewriteEngine on
-RewriteRule ^(.*)$ /public/$1
+ReWriteEngine on
+ReWriteRule ^(.*)$ public/$1
