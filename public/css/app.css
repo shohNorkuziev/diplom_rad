@@ -1,0 +1,40 @@
+html{
+    height: 100%;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+a:hover{
+    text-decoration: underline;
+    color: rgb(190, 189, 189);
+}
+body{
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 25px;
+    background-color: rgb(78, 78, 78);
+    color: white;
+    height: 70px;
+    width: 100%;
+}
+main{
+}
+footer{
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 25px;
+    background-color: rgb(78, 78, 78);
+    color: white;
+    width: 100%;
+}

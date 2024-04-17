@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('patronymic')->nullable();
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role', ['super_admin','admin', 'user'])->default('user');
+            $table->enum('role', ['admin','manager', 'server']);
             $table->timestamps();
         });
     }
