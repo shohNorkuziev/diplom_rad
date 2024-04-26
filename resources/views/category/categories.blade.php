@@ -6,7 +6,7 @@
         {{session()->get('success')}}
     </div>
 @endif
-@if ($data->role=='admin')
+@if ($data->role=='admin' || Auth::user()->role == 'manager')
 <a href="{{ route('categories.create') }}" class="product-add">Добавить категорию</a>
 @endif
 <div class="content_column">

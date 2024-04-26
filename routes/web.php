@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TableController;
 use App\Models\Category;
 use App\Models\Product;
 
@@ -39,3 +40,5 @@ Route::get('/login',[UserController::class,'login'])->name('login');
 Route::post('/signup',[UserController::class,'signup'])->name('signup');
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
 Route::get('/basket',[UserController::class,'basket'])->name('basket');
+
+Route::get('tables',[TableController::class,'index'])->name('tables');

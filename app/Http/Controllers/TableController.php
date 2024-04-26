@@ -12,7 +12,10 @@ class TableController extends Controller
      */
     public function index()
     {
-        //
+        $data = (object)[
+            'tables' => Table::all(),
+        ];
+        return view('table.tables')->with(['data' => $data]);
     }
 
     /**

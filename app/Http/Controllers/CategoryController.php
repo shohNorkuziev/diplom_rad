@@ -51,7 +51,7 @@ class CategoryController extends Controller
             return redirect()->route('categories.create')->with('success','Ошибка при заполнении формы');
         }else{
             Category::create($validator->validated());
-            return redirect()->route('categories.index')->with('success','Товар добавлен');
+            return redirect()->route('categories.index')->with('success','Категория добавлена');
         }
     }
     public function edit(string $id){
@@ -69,11 +69,11 @@ class CategoryController extends Controller
     }
     public function update(Request $request,Category $category){
         $category->update($request->all());
-        return  redirect()->route('categories.index')->with('success','Товар изменен');
+        return  redirect()->route('categories.index')->with('success','Категория изменена');
     }
     public function destroy(string $id){
        $product=Category::find($id);
        $product->delete();
-        return  redirect()->route('categories.index')->with('success','Товар Удален');
+        return  redirect()->route('categories.index')->with('success','Категория Удалена');
     }
 }

@@ -15,43 +15,49 @@
                             <h1 class="header-title">Ресторан</h1>
                         </div>
                         <div class="header-log-menu">
-                            @if ($data->role=='quest')
+                            @guest
                                 <a href="/login">Вход</a>
-                            @endif
-                            @if ($data->role=='user'||$data->role=='admin')
-                                <a href="/basket" class="basket">
-                                    <img src="{{asset('public/images/basket.png')}}" alt="" class="basket-img">
-                                    {{-- @if ($data->qte>1)
-                                        <div class="basket-qty">2</div>
-                                    @endif --}}
-                                </a>
+                            @endguest
+                            @if (Auth::user()->role=='user'||Auth::user()->role=='admin')
                                 <a href="/logout">Выход</a>
                             @endif
                         </div>
                     </div>
                     <nav>
-                        <ul class="nav">
-                            <li>
-                                <a href="/categories">
-                                    Категории
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/catalog">
-                                    Товары
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/create">
-                                    Создание сотрудника
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/info">
-                                    Контакты
-                                </a>
-                            </li>
-                        </ul>
+                        @auth
+                            <ul class="nav">
+                                <li>
+                                    <a href="/categories">
+                                        Категории
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/catalog">
+                                        Товары
+                                    </a>
+                                </li>
+
+
+                                @if(Auth::user()->role=='admin')
+                                    <li>
+                                        <a href="/create">
+                                            Создание сотрудника
+                                        </a>
+                                    </li>
+                                @endif
+
+                                <li>
+                                    <a href="/info">
+                                        Контакты
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{route('tables')}}">
+                                        Столы
+                                    </a>
+                                </li>
+                            </ul>
+                        @endauth
                     </nav>
                 </div>
             </header>

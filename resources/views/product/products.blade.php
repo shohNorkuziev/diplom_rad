@@ -15,7 +15,7 @@
         @endforeach
     </select>
 </nav>
-@if ($data->role=='admin')
+@if (Auth::user()->role=='admin' || Auth::user()->role=='manager')
 <a href="{{ route('products.create') }}" class="product-add">Добавить товар</a>
 @endif
 @if(session()->has('success'))
@@ -32,6 +32,7 @@
                     <img src="{{asset('public/'.$prod->image)}}" alt="{{$prod->name}}" class="product_img">
                     <h2>{{$prod->name}}</h2>
                     <h3>{{$prod->price}} ₽</h3>
+                    <h3>Количество:{{$prod->qty}}</h3>
                 </div>
             </div>
         </a>
