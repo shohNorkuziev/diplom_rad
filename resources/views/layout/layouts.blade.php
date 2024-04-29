@@ -18,9 +18,9 @@
                             @guest
                                 <a href="/login">Вход</a>
                             @endguest
-                            @if (Auth::user()->role=='user'||Auth::user()->role=='admin')
+                            @auth
                                 <a href="/logout">Выход</a>
-                            @endif
+                            @endauth
                         </div>
                     </div>
                     <nav>

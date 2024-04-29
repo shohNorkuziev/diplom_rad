@@ -30,6 +30,7 @@ Route::get('/info',[UserController::class,'info'])->name('info');
 
 Route::resource('/products',ProductController::class)->except('index');
 Route::resource('/categories',CategoryController::class);
+Route::resource('/tables', TableController::class);
 Route::get('sort/{id}/{sort}',[ProductController::class,'sort'])->name('sort');
 Route::get('catalog',[ProductController::class,'catalog'])->name('catalog');
 

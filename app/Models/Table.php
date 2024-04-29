@@ -9,6 +9,7 @@ class Table extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id',
         'status',
     ];
     public function order()

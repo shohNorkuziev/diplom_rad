@@ -18,8 +18,8 @@
     <h2>Столы</h2>
     <div class="content_column">
         @foreach($data->tables as $table)
-            <a href="{{route('tables.show',$table->id)}}">
-            <div class="product_item-v">
+            <a href="/tables/{{$table->id}}">
+            <div class="table_item @if($table->status === "свободна") green @else red @endif">
                 <h2>Номер стола: {{$table->id}}</h2>
                 <h2>Статус: {{$table->status}}</h2>
             </div>

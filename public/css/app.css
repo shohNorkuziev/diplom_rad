@@ -6,6 +6,13 @@
     font-family: Georgia, 'Times New Roman', Times, serif;
     box-sizing: border-box;
 }
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+}
 .wrapper{
     display: grid;
     grid-template-rows: auto 1fr auto;
@@ -84,8 +91,13 @@ a:hover{
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 15px;
 }
+.table_item{
+    padding: 10px;
+    border: 2px solid rgb(0, 0, 0,0.6);
+    border-radius: 2px;
+    overflow: hidden;
+}
 .product_item{
-    background: rgb(128, 128, 128,0.3);
     padding: 10px;
     border: 2px solid rgb(0, 0, 0,0.6);
     border-radius: 2px;

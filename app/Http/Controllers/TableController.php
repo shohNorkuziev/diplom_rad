@@ -15,6 +15,7 @@ class TableController extends Controller
         $data = (object)[
             'tables' => Table::all(),
         ];
+
         return view('table.tables')->with(['data' => $data]);
     }
 
@@ -39,7 +40,12 @@ class TableController extends Controller
      */
     public function show(Table $table)
     {
-        //
+        $tables = Table::find($table)->first();
+        $data = (object)[
+            'id' => $tables->id,
+            'status' => $tables->status,
+        ];
+        return view('table.show', ['data' => $data]);
     }
 
     /**
@@ -63,6 +69,7 @@ class TableController extends Controller
      */
     public function destroy(Table $table)
     {
-        //
+        $table->delete();
+        return  redirect()->route('tables')->with('success','Стол Удален');
     }
 }
