@@ -23,6 +23,13 @@ class UserController extends Controller
             $this->user_role='quest';
         }
     }
+    public function index()
+    {
+        $data=(object)[
+            'users' => User::all(),
+        ];
+        return view('auth.index')->with(['data'=>$data]);
+    }
     public function home(){
         $this->authUser();
         $data=(object)[
@@ -120,5 +127,10 @@ class UserController extends Controller
             Auth::logout();
         }
         return redirect()->route('info')->with('success','Вы вышли');
+    }
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->back()->with('success','Сотрудник удален');
     }
 }

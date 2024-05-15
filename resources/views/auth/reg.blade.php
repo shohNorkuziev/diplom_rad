@@ -41,10 +41,7 @@
             <label for="admin-password">Пароль админа</label>
             <input type="password" name="admin-password" id="admin-password"><br>
             <div class="form_group">
-                <p>Уже Зарегистрированы? <a href="login">Авторизуйтесь</a></p>
-            </div>
-            <div class="form_group">
-                <input class="input-create" type="submit"value="Зарегистрироваться">
+                <input class="input-create" type="submit"value="Создать">
             </div>
         </form>
     </div>

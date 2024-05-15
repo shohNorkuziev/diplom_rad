@@ -31,12 +31,14 @@ Route::get('/info',[UserController::class,'info'])->name('info');
 Route::resource('/products',ProductController::class)->except('index');
 Route::resource('/categories',CategoryController::class);
 Route::resource('/tables', TableController::class);
+Route::resource('/users', UserController::class);
 Route::get('sort/{id}/{sort}',[ProductController::class,'sort'])->name('sort');
 Route::get('catalog',[ProductController::class,'catalog'])->name('catalog');
 
 Route::get('/create',[UserController::class,'create'])->name('create');
 Route::post('/create',[UserController::class,'store'])->name('store');
 
+Route::get('/users', [UserController::class, 'index'])->name('users');
 Route::get('/login',[UserController::class,'login'])->name('login');
 Route::post('/signup',[UserController::class,'signup'])->name('signup');
 Route::get('/logout',[UserController::class,'logout'])->name('logout');

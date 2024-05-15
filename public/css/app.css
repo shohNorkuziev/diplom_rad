@@ -44,7 +44,7 @@ hr{
 }
 .nav{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 .nav li{
     display: grid;
@@ -96,6 +96,7 @@ a:hover{
     border: 2px solid rgb(0, 0, 0,0.6);
     border-radius: 2px;
     overflow: hidden;
+    width: fit-content;
 }
 .product_item{
     padding: 10px;
